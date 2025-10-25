@@ -96,6 +96,11 @@
             font-weight: 600;
         }
 
+        .dev-info p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
         .dev-steam-link {
             display: inline-block;
             padding: 10px 20px;
@@ -169,7 +174,7 @@
             border: 1px solid #2a2a2a;
             border-top: none;
             border-radius: 0 0 6px 6px;
-            max-height: 350px;
+            max-height: 300px;
             overflow-y: auto;
             z-index: 1000;
             display: none;
@@ -204,17 +209,6 @@
             color: #666;
             font-size: 0.8em;
             margin-top: 3px;
-        }
-
-        .leaderboard-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            background: #dc2626;
-            color: #ffffff;
-            border-radius: 3px;
-            font-size: 0.7em;
-            margin-left: 5px;
-            font-weight: 600;
         }
 
         button {
@@ -279,47 +273,6 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
             font-weight: 500;
-        }
-
-        .leaderboard-alert {
-            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-            border: 2px solid #dc2626;
-            border-radius: 8px;
-            padding: 25px;
-            margin-bottom: 30px;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
-            50% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
-        }
-
-        .leaderboard-alert h3 {
-            font-size: 1.4em;
-            margin-bottom: 10px;
-            color: #ffffff;
-        }
-
-        .leaderboard-alert p {
-            color: #ffffff;
-            margin-bottom: 15px;
-        }
-
-        .leaderboard-link {
-            display: inline-block;
-            padding: 12px 24px;
-            background: #ffffff;
-            color: #dc2626;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .leaderboard-link:hover {
-            background: #f3f3f3;
-            transform: scale(1.05);
         }
 
         .players-grid {
@@ -575,8 +528,8 @@
                 <div class="stat-label">Total Profile Views</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">200+</div>
-                <div class="stat-label">Tracked Servers</div>
+                <div class="stat-value">25+</div>
+                <div class="stat-label">Verified Sources</div>
             </div>
         </div>
 
@@ -592,11 +545,10 @@
                 <button onclick="addPlayer()">Track</button>
             </div>
             <p class="info-text">
-                <strong>TIP:</strong> Find Steam ID64 via steamid.io | Servers with <span style="background:#dc2626;padding:2px 6px;border-radius:3px;">LEADERBOARD</span> tag have K/D tracking
+                <strong>TIP:</strong> Find Steam ID64 via steamid.io | Type server name for suggestions
             </p>
         </div>
 
-        <div id="leaderboardAlert"></div>
         <div id="playersContainer" class="players-grid"></div>
     </div>
 
@@ -604,91 +556,32 @@
         let players = [];
 
         const popularServers = [
-            // RUSTORIA - HAS LEADERBOARDS
-            { name: "Rustoria EU Main", region: "EU", hasLeaderboard: true, leaderboardUrl: "https://rustoria.co/leaderboards" },
-            { name: "Rustoria US Main", region: "US", hasLeaderboard: true, leaderboardUrl: "https://rustoria.co/leaderboards" },
-            { name: "Rustoria EU Long", region: "EU", hasLeaderboard: true, leaderboardUrl: "https://rustoria.co/leaderboards" },
-            { name: "Rustoria US Long", region: "US", hasLeaderboard: true, leaderboardUrl: "https://rustoria.co/leaderboards" },
-            { name: "Rustoria EU Medium", region: "EU", hasLeaderboard: true, leaderboardUrl: "https://rustoria.co/leaderboards" },
-            { name: "Rustoria US Medium", region: "US", hasLeaderboard: true, leaderboardUrl: "https://rustoria.co/leaderboards" },
-            
-            // REDDIT - HAS LEADERBOARDS
-            { name: "Reddit EU Main", region: "EU", hasLeaderboard: true, leaderboardUrl: "https://redditplayrust.com/stats" },
-            { name: "Reddit US Main", region: "US", hasLeaderboard: true, leaderboardUrl: "https://redditplayrust.com/stats" },
-            { name: "Reddit EU Medium", region: "EU", hasLeaderboard: true, leaderboardUrl: "https://redditplayrust.com/stats" },
-            { name: "Reddit US Medium", region: "US", hasLeaderboard: true, leaderboardUrl: "https://redditplayrust.com/stats" },
-            { name: "Reddit US Monday", region: "US", hasLeaderboard: true, leaderboardUrl: "https://redditplayrust.com/stats" },
-            { name: "Reddit US Quad", region: "US", hasLeaderboard: true, leaderboardUrl: "https://redditplayrust.com/stats" },
-            
-            // RUSTY MOOSE
-            { name: "Rusty Moose EU Main", region: "EU", hasLeaderboard: false },
-            { name: "Rusty Moose US Main", region: "US", hasLeaderboard: false },
-            { name: "Rusty Moose EU Medium", region: "EU", hasLeaderboard: false },
-            { name: "Rusty Moose US Medium", region: "US", hasLeaderboard: false },
-            { name: "Rusty Moose EU Trio", region: "EU", hasLeaderboard: false },
-            { name: "Rusty Moose US Trio", region: "US", hasLeaderboard: false },
-            { name: "Rusty Moose EU Odd", region: "EU", hasLeaderboard: false },
-            { name: "Rusty Moose US Odd", region: "US", hasLeaderboard: false },
-            
-            // RUSTAFIED
-            { name: "Rustafied EU Main", region: "EU", hasLeaderboard: false },
-            { name: "Rustafied US Main", region: "US", hasLeaderboard: false },
-            { name: "Rustafied EU Medium", region: "EU", hasLeaderboard: false },
-            { name: "Rustafied US Medium", region: "US", hasLeaderboard: false },
-            { name: "Rustafied EU Small", region: "EU", hasLeaderboard: false },
-            { name: "Rustafied US Small", region: "US", hasLeaderboard: false },
-            { name: "Rustafied EU Long", region: "EU", hasLeaderboard: false },
-            { name: "Rustafied US Long", region: "US", hasLeaderboard: false },
-            
-            // VITAL
-            { name: "Vital EU Main", region: "EU", hasLeaderboard: false },
-            { name: "Vital US Main", region: "US", hasLeaderboard: false },
-            { name: "Vital EU Medium", region: "EU", hasLeaderboard: false },
-            { name: "Vital US Medium", region: "US", hasLeaderboard: false },
-            
-            // STEVIOUS
-            { name: "Stevious EU 2x", region: "EU", hasLeaderboard: false },
-            { name: "Stevious EU 5x", region: "EU", hasLeaderboard: false },
-            { name: "Stevious EU 10x", region: "EU", hasLeaderboard: false },
-            
-            // WILLJUM
-            { name: "Willjum EU", region: "EU", hasLeaderboard: false },
-            { name: "Willjum US", region: "US", hasLeaderboard: false },
-            
-            // PICKLE
-            { name: "Pickle EU", region: "EU", hasLeaderboard: false },
-            { name: "Pickle US", region: "US", hasLeaderboard: false },
-            
-            // FACEPUNCH
-            { name: "Facepunch 1", region: "EU", hasLeaderboard: false },
-            { name: "Facepunch 2", region: "EU", hasLeaderboard: false },
-            { name: "Facepunch 3", region: "EU", hasLeaderboard: false },
-            { name: "Facepunch 4", region: "EU", hasLeaderboard: false },
-            { name: "Facepunch 5", region: "EU", hasLeaderboard: false },
-            
-            // BLOO LAGOON
-            { name: "Bloo Lagoon EU 2x", region: "EU", hasLeaderboard: false },
-            { name: "Bloo Lagoon US 2x", region: "US", hasLeaderboard: false },
-            
-            // PARANOID
-            { name: "Paranoid EU 10x", region: "EU", hasLeaderboard: false },
-            { name: "Paranoid US 10x", region: "US", hasLeaderboard: false },
-            
-            // UPSURGE
-            { name: "Upsurge EU Vanilla", region: "EU", hasLeaderboard: false },
-            { name: "Upsurge US Vanilla", region: "US", hasLeaderboard: false },
-            
-            // LONE SURVIVOR
-            { name: "Lone Survivor EU", region: "EU", hasLeaderboard: false },
-            { name: "Lone Survivor US", region: "US", hasLeaderboard: false },
-            
-            // RUSTY CARTPUSHERS
-            { name: "Rusty Cartpushers EU", region: "EU", hasLeaderboard: false },
-            { name: "Rusty Cartpushers US", region: "US", hasLeaderboard: false },
-            
-            // INTOXICATED
-            { name: "Intoxicated EU 2x", region: "EU", hasLeaderboard: false },
-            { name: "Intoxicated US 2x", region: "US", hasLeaderboard: false },
+            { name: "Rusty Moose EU Main", ip: "rustymoose.eu:28015", region: "EU" },
+            { name: "Rusty Moose US Main", ip: "main.rustymoose.com:28015", region: "US" },
+            { name: "Rusty Moose EU Medium", ip: "medium.rustymoose.eu:28015", region: "EU" },
+            { name: "Rusty Moose US Medium", ip: "medium.rustymoose.com:28015", region: "US" },
+            { name: "Rustafied EU Main", ip: "eu.rustafied.com:28015", region: "EU" },
+            { name: "Rustafied US Main", ip: "us.rustafied.com:28015", region: "US" },
+            { name: "Rustafied EU Medium", ip: "eu-medium.rustafied.com:28015", region: "EU" },
+            { name: "Rustafied US Medium", ip: "us-medium.rustafied.com:28015", region: "US" },
+            { name: "Rustafied EU Small", ip: "eu-small.rustafied.com:28015", region: "EU" },
+            { name: "Rustafied US Small", ip: "us-small.rustafied.com:28015", region: "US" },
+            { name: "Rustoria EU Main", ip: "main.eu.rustoria.co:28015", region: "EU" },
+            { name: "Rustoria US Main", ip: "main.us.rustoria.co:28015", region: "US" },
+            { name: "Rustoria EU Long", ip: "long.eu.rustoria.co:28015", region: "EU" },
+            { name: "Rustoria US Long", ip: "long.us.rustoria.co:28015", region: "US" },
+            { name: "Vital EU Main", ip: "vital-main.fragnet.net:28015", region: "EU" },
+            { name: "Vital US Main", ip: "vital-main-us.fragnet.net:28015", region: "US" },
+            { name: "Stevious EU 2x", ip: "stevious.net:28015", region: "EU" },
+            { name: "Stevious EU 5x", ip: "stevious5x.net:28015", region: "EU" },
+            { name: "Moose EU Trio", ip: "trio.rustymoose.eu:28015", region: "EU" },
+            { name: "Moose US Trio", ip: "trio.rustymoose.com:28015", region: "US" },
+            { name: "Facepunch 1", ip: "facepunch1.fragnet.net:28015", region: "EU" },
+            { name: "Facepunch 2", ip: "facepunch2.fragnet.net:28015", region: "EU" },
+            { name: "Willjum EU", ip: "willjum.eu:28015", region: "EU" },
+            { name: "Willjum US", ip: "willjum.us:28015", region: "US" },
+            { name: "Pickle EU", ip: "pickle.eu:28015", region: "EU" },
+            { name: "Pickle US", ip: "pickle.us:28015", region: "US" }
         ];
 
         const serverInput = document.getElementById('serverInput');
@@ -708,12 +601,9 @@
 
             if (filtered.length > 0) {
                 serverSuggestions.innerHTML = filtered.map(server => `
-                    <div class="server-suggestion-item" onclick="selectServer('${server.name.replace(/'/g, "\\'")}', ${server.hasLeaderboard}, '${server.leaderboardUrl || ''}')">
-                        <div class="server-name">
-                            ${server.name}
-                            ${server.hasLeaderboard ? '<span class="leaderboard-badge">LEADERBOARD</span>' : ''}
-                        </div>
-                        <div class="server-details">${server.region}${server.hasLeaderboard ? ' | K/D Tracking Available' : ''}</div>
+                    <div class="server-suggestion-item" onclick="selectServer('${server.name.replace(/'/g, "\\'")}')">
+                        <div class="server-name">${server.name}</div>
+                        <div class="server-details">${server.ip} | ${server.region}</div>
                     </div>
                 `).join('');
                 serverSuggestions.classList.add('show');
@@ -728,24 +618,9 @@
             }
         });
 
-        function selectServer(serverName, hasLeaderboard, leaderboardUrl) {
+        function selectServer(serverName) {
             serverInput.value = serverName;
             serverSuggestions.classList.remove('show');
-            
-            if (hasLeaderboard && leaderboardUrl) {
-                showLeaderboardAlert(serverName, leaderboardUrl);
-            }
-        }
-
-        function showLeaderboardAlert(serverName, leaderboardUrl) {
-            const alert = document.getElementById('leaderboardAlert');
-            alert.innerHTML = `
-                <div class="leaderboard-alert">
-                    <h3>🎯 Leaderboard Server Detected!</h3>
-                    <p><strong>${serverName}</strong> has a public leaderboard with K/D stats. Check the leaderboard to find your target's exact statistics!</p>
-                    <a href="${leaderboardUrl}" target="_blank" class="leaderboard-link">Open ${serverName.split(' ')[0]} Leaderboard →</a>
-                </div>
-            `;
         }
 
         function loadPlayers() {
@@ -800,4 +675,226 @@
             }
 
             if (!/^7656119\d{10}$/.test(steamId)) {
-                alert('Invalid Steam ID64
+                alert('Invalid Steam ID64 format! Must be 17 digits starting with 7656119.');
+                return;
+            }
+
+            if (players.some(p => p.steamId === steamId)) {
+                alert('Player already in tracking database!');
+                return;
+            }
+
+            players.unshift({
+                steamId: steamId,
+                name: playerName || 'Unknown Player',
+                server: server || '',
+                addedDate: new Date().toISOString(),
+                viewCount: 0,
+                lastViewed: new Date().toISOString()
+            });
+
+            savePlayers();
+            renderPlayers();
+
+            document.getElementById('steamIdInput').value = '';
+            document.getElementById('playerNameInput').value = '';
+            document.getElementById('serverInput').value = '';
+        }
+
+        function deletePlayer(steamId) {
+            if (confirm('Remove player from database?')) {
+                players = players.filter(p => p.steamId !== steamId);
+                savePlayers();
+                renderPlayers();
+            }
+        }
+
+        function formatDate(isoDate) {
+            const date = new Date(isoDate);
+            const now = new Date();
+            const diffTime = Math.abs(now - date);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+            const diffMinutes = Math.floor(diffTime / (1000 * 60));
+            
+            if (diffMinutes < 1) return 'Just now';
+            if (diffMinutes < 60) return `${diffMinutes}m ago`;
+            if (diffHours < 24) return `${diffHours}h ago`;
+            if (diffDays === 0) return 'Today';
+            if (diffDays === 1) return 'Yesterday';
+            if (diffDays < 7) return `${diffDays}d ago`;
+            if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`;
+            
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        function renderPlayers() {
+            const container = document.getElementById('playersContainer');
+
+            if (players.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <h2>No Players Tracked</h2>
+                        <p>Add a player via Steam ID64 to begin intelligence gathering</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = players.map(player => `
+                <div class="player-card">
+                    <div class="player-header">
+                        <div>
+                            <div class="player-name">
+                                ${player.name}
+                                <span class="tracking-badge">${player.viewCount || 0} VIEWS</span>
+                            </div>
+                        </div>
+                        <button class="delete-btn" onclick="deletePlayer('${player.steamId}')">Remove</button>
+                    </div>
+
+                    <div class="player-meta">
+                        <div class="meta-item">
+                            <div class="meta-label">Profile Views</div>
+                            <div class="meta-value highlight">${player.viewCount || 0}</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Last Tracked</div>
+                            <div class="meta-value">${formatDate(player.lastViewed || player.addedDate)}</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Added</div>
+                            <div class="meta-value">${formatDate(player.addedDate)}</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Steam ID64</div>
+                            <div class="meta-value" style="font-size: 0.8em;">${player.steamId}</div>
+                        </div>
+                    </div>
+
+                    ${player.server ? `
+                    <div class="server-info">
+                        <div class="server-info-label">Last Known Server</div>
+                        <div class="server-info-value">${player.server}</div>
+                    </div>
+                    ` : ''}
+                    
+                    <div class="section-title">Primary Intelligence Sources</div>
+                    <div class="tracker-links">
+                        <a href="https://steamcommunity.com/profiles/${player.steamId}?xml=1" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>Steam API Data (XML)</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                    </div>
+
+                    <div class="section-title">Social Intelligence</div>
+                    <div class="tracker-links">
+                        <a href="https://steamcommunity.com/profiles/${player.steamId}/friends" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>Steam Friends Network</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                        <a href="https://steamcommunity.com/profiles/${player.steamId}/games/?tab=all" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>Game Library</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                        <a href="https://steamcommunity.com/profiles/${player.steamId}/screenshots/" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>Screenshots</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                        <a href="https://steamcommunity.com/profiles/${player.steamId}/badges/" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>Badges & Level</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                        <a href="https://steamladder.com/profile/${player.steamId}/" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>Steam Ladder Ranking</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                        <a href="https://steamid.uk/profile/${player.steamId}" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>Name History</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                    </div>
+
+                    <div class="section-title">Advanced Tools</div>
+                    <div class="tracker-links">
+                        <a href="https://steamcommunity.com/profiles/${player.steamId}/inventoryhistory/" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>Inventory History</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                        <a href="https://www.google.com/search?q=${player.steamId}" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>Google Search</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('steamIdInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addPlayer();
+            }
+        });
+
+        document.getElementById('playerNameInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addPlayer();
+            }
+        });
+
+        document.getElementById('serverInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addPlayer();
+            }
+        });
+
+        loadPlayers();
+    </script>
+</body>
+</html>https://steamcommunity.com/profiles/${player.steamId}" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>Steam Profile</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                        <a href="https://www.battlemetrics.com/players?filter[search]=${player.steamId}&method=quick&redirect=1" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>Battlemetrics Profile</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                        <a href="https://steamid.io/lookup/${player.steamId}" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>Steam ID Analysis</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                    </div>
+
+                    <div class="section-title">Server Activity & Stats</div>
+                    <div class="tracker-links">
+                        <a href="https://www.battlemetrics.com/players?filter[search]=${player.steamId}&filter[servers]=&sort=-score" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>Battlemetrics Server History</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                        <a href="https://www.rustservers.gg/player/${player.steamId}" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>Rust Servers GG</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                        <a href="https://rustoria.co/stats" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>Rustoria Stats (Search Manual)</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                        <a href="https://rustafied.com" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>Rustafied Leaderboards</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                    </div>
+
+                    <div class="section-title">Ban & Security Check</div>
+                    <div class="tracker-links">
+                        <a href="https://rustbanned.com/player/${player.steamId}" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>Rust Banned Database</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                        <a href="https://steamrep.com/profiles/${player.steamId}" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                            <span>SteamRep Check</span>
+                            <span class="link-icon">→</span>
+                        </a>
+                        <a href="
+
+         
