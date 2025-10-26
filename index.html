@@ -561,9 +561,7 @@
         }
 
         .tracker-link {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            display: block;
             padding: 14px 18px;
             background: rgba(0, 0, 0, 0.6);
             color: #ffffff;
@@ -582,18 +580,8 @@
             box-shadow: 0 4px 15px rgba(220, 38, 38, 0.2);
         }
 
-        .tracker-link .link-icon {
-            color: #777;
-            font-size: 1.2em;
-            transition: all 0.3s;
-        }
-
-        .tracker-link:hover .link-icon {
-            color: #dc2626;
-        }
-
-        .tracker-link span {
-            pointer-events: none;
+        .tracker-link:active {
+            transform: translateX(8px) scale(0.98);
         }
 
         .empty-state {
@@ -1040,92 +1028,77 @@
                     </div>
                     ` : ''}
                     
-                    <div class="section-title">Primary Intelligence</div>
+                    <div class="section-title">Primary Intelligence (TEST)</div>
                     <div class="tracker-links">
-                        <a href="https://steamcommunity.com/profiles/${player.steamId}" target="_blank" rel="noopener noreferrer" class="tracker-link">
-                            <span>Steam Profile</span>
-                            <span class="link-icon">→</span>
-                        </a>
-                        <a href="https://www.battlemetrics.com/players?filter[search]=${encodeURIComponent(player.name)}&sort=-lastSeen" target="_blank" rel="noopener noreferrer" class="tracker-link">
-                            <span>Battlemetrics Search (${player.name})</span>
-                            <span class="link-icon">→</span>
-                        </a>
-                        <a href="https://steamid.io/lookup/${player.steamId}" target="_blank" rel="noopener noreferrer" class="tracker-link">
-                            <span>Steam ID Analysis</span>
-                            <span class="link-icon">→</span>
-                        </a>
+                        <div class="tracker-link" onclick="alert('Link clicked!'); window.open('https://steamcommunity.com/profiles/${player.steamId}', '_blank'); return false;">
+                            Steam Profile → [CLICK TEST]
+                        </div>
+                        <div class="tracker-link" onclick="window.open('https://www.battlemetrics.com/players?filter[search]=${encodeURIComponent(player.name)}&sort=-lastSeen', '_blank'); return false;">
+                            Battlemetrics Search (${player.name}) →
+                        </div>
+                        <div class="tracker-link" onclick="window.open('https://steamid.io/lookup/${player.steamId}', '_blank'); return false;">
+                            Steam ID Analysis →
+                        </div>
                     </div>
 
                     ${player.server && (player.server.includes('Rustoria') || player.server.includes('Moose') || player.server.includes('Reddit')) ? `
                     <div class="section-title">🎯 Server Leaderboards (K/D Stats)</div>
                     <div class="tracker-links">
                         ${player.server.includes('Rustoria') ? `
-                        <a href="https://rustoria.co/leaderboards" target="_blank" rel="noopener noreferrer" class="tracker-link">
-                            <span>Rustoria Leaderboards</span>
-                            <span class="link-icon">→</span>
-                        </a>
-                        <a href="https://rustoria.co/stats" target="_blank" rel="noopener noreferrer" class="tracker-link">
-                            <span>Rustoria Player Stats</span>
-                            <span class="link-icon">→</span>
-                        </a>
+                        <div class="tracker-link" onclick="window.open('https://rustoria.co/leaderboards', '_blank')">
+                            Rustoria Leaderboards →
+                        </div>
+                        <div class="tracker-link" onclick="window.open('https://rustoria.co/stats', '_blank')">
+                            Rustoria Player Stats →
+                        </div>
                         ` : ''}
                         ${player.server.includes('Moose') ? `
-                        <a href="https://beta.moose.gg/stats" target="_blank" rel="noopener noreferrer" class="tracker-link">
-                            <span>Moose Stats & Leaderboards</span>
-                            <span class="link-icon">→</span>
-                        </a>
+                        <div class="tracker-link" onclick="window.open('https://beta.moose.gg/stats', '_blank')">
+                            Moose Stats & Leaderboards →
+                        </div>
                         ` : ''}
                         ${player.server.includes('Reddit') ? `
-                        <a href="https://www.reddit.com/r/playrustservers/" target="_blank" rel="noopener noreferrer" class="tracker-link">
-                            <span>Reddit Server Stats</span>
-                            <span class="link-icon">→</span>
-                        </a>
+                        <div class="tracker-link" onclick="window.open('https://www.reddit.com/r/playrustservers/', '_blank')">
+                            Reddit Server Stats →
+                        </div>
                         ` : ''}
                     </div>
                     ` : ''}
 
                     <div class="section-title">Stats & Performance</div>
                     <div class="tracker-links">
-                        <a href="https://ruststats.io/profile/${player.steamId}" target="_blank" rel="noopener noreferrer" class="tracker-link">
-                            <span>Rust Stats IO (K/D, Kills, Deaths)</span>
-                            <span class="link-icon">→</span>
-                        </a>
-                        <a href="https://www.battlemetrics.com/players?filter[search]=${encodeURIComponent(player.name)}&filter[servers]=&sort=-score" target="_blank" rel="noopener noreferrer" class="tracker-link">
-                            <span>Battlemetrics Server History</span>
-                            <span class="link-icon">→</span>
-                        </a>
-                        <a href="https://www.rustservers.gg/player/${player.steamId}" target="_blank" rel="noopener noreferrer" class="tracker-link">
-                            <span>Rust Servers GG</span>
-                            <span class="link-icon">→</span>
-                        </a>
+                        <div class="tracker-link" onclick="window.open('https://ruststats.io/profile/${player.steamId}', '_blank')">
+                            Rust Stats IO (K/D, Kills, Deaths) →
+                        </div>
+                        <div class="tracker-link" onclick="window.open('https://www.battlemetrics.com/players?filter[search]=${encodeURIComponent(player.name)}&filter[servers]=&sort=-score', '_blank')">
+                            Battlemetrics Server History →
+                        </div>
+                        <div class="tracker-link" onclick="window.open('https://www.rustservers.gg/player/${player.steamId}', '_blank')">
+                            Rust Servers GG →
+                        </div>
                     </div>
 
                     <div class="section-title">Ban Check</div>
                     <div class="tracker-links">
-                        <a href="https://rustbanned.com/player/${player.steamId}" target="_blank" rel="noopener noreferrer" class="tracker-link">
-                            <span>Rust Banned Database</span>
-                            <span class="link-icon">→</span>
-                        </a>
-                        <a href="https://steamrep.com/profiles/${player.steamId}" target="_blank" rel="noopener noreferrer" class="tracker-link">
-                            <span>SteamRep Check</span>
-                            <span class="link-icon">→</span>
-                        </a>
+                        <div class="tracker-link" onclick="window.open('https://rustbanned.com/player/${player.steamId}', '_blank')">
+                            Rust Banned Database →
+                        </div>
+                        <div class="tracker-link" onclick="window.open('https://steamrep.com/profiles/${player.steamId}', '_blank')">
+                            SteamRep Check →
+                        </div>
                     </div>
 
                     <div class="section-title">Social Intelligence</div>
                     <div class="tracker-links">
-                        <a href="https://steamcommunity.com/profiles/${player.steamId}/friends" target="_blank" rel="noopener noreferrer" class="tracker-link">
-                            <span>Steam Friends</span>
-                            <span class="link-icon">→</span>
-                        </a>
-                        <a href="https://steamcommunity.com/profiles/${player.steamId}/games/?tab=all" target="_blank" rel="noopener noreferrer" class="tracker-link">
-                            <span>Game Library</span>
-                            <span class="link-icon">→</span>
-                        </a>
-                        <a href="https://steamid.uk/profile/${player.steamId}" target="_blank" rel="noopener noreferrer" class="tracker-link">
-                            <span>Name History</span>
-                            <span class="link-icon">→</span>
-                        </a>
+                        <div class="tracker-link" onclick="window.open('https://steamcommunity.com/profiles/${player.steamId}/friends', '_blank')">
+                            Steam Friends →
+                        </div>
+                        <div class="tracker-link" onclick="window.open('https://steamcommunity.com/profiles/${player.steamId}/games/?tab=all', '_blank')">
+                            Game Library →
+                        </div>
+                        <div class="tracker-link" onclick="window.open('https://steamid.uk/profile/${player.steamId}', '_blank')">
+                            Name History →
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -1153,6 +1126,4 @@
     </script>
 </body>
 </html>
-
-
-
+          
