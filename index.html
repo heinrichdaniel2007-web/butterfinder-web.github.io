@@ -572,6 +572,7 @@
             transition: all 0.3s;
             font-size: 0.95em;
             border: 1px solid rgba(220, 38, 38, 0.1);
+            cursor: pointer;
         }
 
         .tracker-link:hover {
@@ -589,6 +590,10 @@
 
         .tracker-link:hover .link-icon {
             color: #dc2626;
+        }
+
+        .tracker-link span {
+            pointer-events: none;
         }
 
         .empty-state {
@@ -903,6 +908,7 @@
                 savePlayers();
                 renderPlayers();
             }
+            return true;
         }
 
         function addPlayer() {
@@ -946,6 +952,9 @@
             const serverObj = popularServers.find(s => s.name === server);
             if (serverObj && serverObj.hasLeaderboard) {
                 showLeaderboardSection(server, serverObj.leaderboardUrl, playerName);
+            } else {
+                // Clear leaderboard alert if no leaderboard server
+                document.getElementById('leaderboardAlert').innerHTML = '';
             }
 
             document.getElementById('steamIdInput').value = '';
@@ -1033,15 +1042,15 @@
                     
                     <div class="section-title">Primary Intelligence</div>
                     <div class="tracker-links">
-                        <a href="https://steamcommunity.com/profiles/${player.steamId}" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                        <a href="https://steamcommunity.com/profiles/${player.steamId}" target="_blank" rel="noopener noreferrer" class="tracker-link">
                             <span>Steam Profile</span>
                             <span class="link-icon">→</span>
                         </a>
-                        <a href="https://www.battlemetrics.com/players?filter[search]=${encodeURIComponent(player.name)}&sort=-lastSeen" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                        <a href="https://www.battlemetrics.com/players?filter[search]=${encodeURIComponent(player.name)}&sort=-lastSeen" target="_blank" rel="noopener noreferrer" class="tracker-link">
                             <span>Battlemetrics Search (${player.name})</span>
                             <span class="link-icon">→</span>
                         </a>
-                        <a href="https://steamid.io/lookup/${player.steamId}" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                        <a href="https://steamid.io/lookup/${player.steamId}" target="_blank" rel="noopener noreferrer" class="tracker-link">
                             <span>Steam ID Analysis</span>
                             <span class="link-icon">→</span>
                         </a>
@@ -1051,23 +1060,23 @@
                     <div class="section-title">🎯 Server Leaderboards (K/D Stats)</div>
                     <div class="tracker-links">
                         ${player.server.includes('Rustoria') ? `
-                        <a href="https://rustoria.co/leaderboards" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                        <a href="https://rustoria.co/leaderboards" target="_blank" rel="noopener noreferrer" class="tracker-link">
                             <span>Rustoria Leaderboards</span>
                             <span class="link-icon">→</span>
                         </a>
-                        <a href="https://rustoria.co/stats" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                        <a href="https://rustoria.co/stats" target="_blank" rel="noopener noreferrer" class="tracker-link">
                             <span>Rustoria Player Stats</span>
                             <span class="link-icon">→</span>
                         </a>
                         ` : ''}
                         ${player.server.includes('Moose') ? `
-                        <a href="https://beta.moose.gg/stats" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                        <a href="https://beta.moose.gg/stats" target="_blank" rel="noopener noreferrer" class="tracker-link">
                             <span>Moose Stats & Leaderboards</span>
                             <span class="link-icon">→</span>
                         </a>
                         ` : ''}
                         ${player.server.includes('Reddit') ? `
-                        <a href="https://www.reddit.com/r/playrustservers/" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                        <a href="https://www.reddit.com/r/playrustservers/" target="_blank" rel="noopener noreferrer" class="tracker-link">
                             <span>Reddit Server Stats</span>
                             <span class="link-icon">→</span>
                         </a>
@@ -1077,15 +1086,15 @@
 
                     <div class="section-title">Stats & Performance</div>
                     <div class="tracker-links">
-                        <a href="https://ruststats.io/profile/${player.steamId}" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                        <a href="https://ruststats.io/profile/${player.steamId}" target="_blank" rel="noopener noreferrer" class="tracker-link">
                             <span>Rust Stats IO (K/D, Kills, Deaths)</span>
                             <span class="link-icon">→</span>
                         </a>
-                        <a href="https://www.battlemetrics.com/players?filter[search]=${encodeURIComponent(player.name)}&filter[servers]=&sort=-score" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                        <a href="https://www.battlemetrics.com/players?filter[search]=${encodeURIComponent(player.name)}&filter[servers]=&sort=-score" target="_blank" rel="noopener noreferrer" class="tracker-link">
                             <span>Battlemetrics Server History</span>
                             <span class="link-icon">→</span>
                         </a>
-                        <a href="https://www.rustservers.gg/player/${player.steamId}" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                        <a href="https://www.rustservers.gg/player/${player.steamId}" target="_blank" rel="noopener noreferrer" class="tracker-link">
                             <span>Rust Servers GG</span>
                             <span class="link-icon">→</span>
                         </a>
@@ -1093,11 +1102,11 @@
 
                     <div class="section-title">Ban Check</div>
                     <div class="tracker-links">
-                        <a href="https://rustbanned.com/player/${player.steamId}" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                        <a href="https://rustbanned.com/player/${player.steamId}" target="_blank" rel="noopener noreferrer" class="tracker-link">
                             <span>Rust Banned Database</span>
                             <span class="link-icon">→</span>
                         </a>
-                        <a href="https://steamrep.com/profiles/${player.steamId}" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                        <a href="https://steamrep.com/profiles/${player.steamId}" target="_blank" rel="noopener noreferrer" class="tracker-link">
                             <span>SteamRep Check</span>
                             <span class="link-icon">→</span>
                         </a>
@@ -1105,15 +1114,15 @@
 
                     <div class="section-title">Social Intelligence</div>
                     <div class="tracker-links">
-                        <a href="https://steamcommunity.com/profiles/${player.steamId}/friends" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                        <a href="https://steamcommunity.com/profiles/${player.steamId}/friends" target="_blank" rel="noopener noreferrer" class="tracker-link">
                             <span>Steam Friends</span>
                             <span class="link-icon">→</span>
                         </a>
-                        <a href="https://steamcommunity.com/profiles/${player.steamId}/games/?tab=all" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                        <a href="https://steamcommunity.com/profiles/${player.steamId}/games/?tab=all" target="_blank" rel="noopener noreferrer" class="tracker-link">
                             <span>Game Library</span>
                             <span class="link-icon">→</span>
                         </a>
-                        <a href="https://steamid.uk/profile/${player.steamId}" target="_blank" class="tracker-link" onclick="incrementViewCount('${player.steamId}')">
+                        <a href="https://steamid.uk/profile/${player.steamId}" target="_blank" rel="noopener noreferrer" class="tracker-link">
                             <span>Name History</span>
                             <span class="link-icon">→</span>
                         </a>
