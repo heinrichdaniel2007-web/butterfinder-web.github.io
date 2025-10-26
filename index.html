@@ -690,7 +690,7 @@
                     <input type="text" id="serverInput" placeholder="Server Name (e.g. Rusty Moose)" autocomplete="off">
                     <div class="server-suggestions" id="serverSuggestions"></div>
                 </div>
-                <button onclick="addPlayer()">Track</button>
+                <button onclick="addPlayer(); return false;">Track</button>
             </div>
             <p class="info-text">
                 <strong>WICHTIG:</strong> Player Name wird für Battlemetrics-Suche benötigt | Servers mit <span style="background:#dc2626;padding:3px 8px;border-radius:5px;font-weight:700;">LEADERBOARD</span> zeigen K/D Stats
@@ -1144,5 +1144,6 @@
     </script>
 </body>
 </html>
+
 
 
